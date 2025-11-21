@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function recupererUtilisateur(id, callback) {
+        console.log("Recherche de l'utilisateur " + id + "...");
+
+        // TODO: Utilisez setTimeout pour simuler un délai de 2000ms
+        setTimeout(function () {
+          const utilisateur = {
+            id: id,
+            nom: "Alami",
+            prenom: "Fatima",
+            ville: "Casablanca",
+          };
+          // puis appelez le callback avec les données de l'utilisateur
+          callback(utilisateur);
+        }, 2000);
+      }
+      recupererUtilisateur(1, console.log);
+    </script>
+  </body>
+</html>

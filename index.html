@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      /* // 1- cas requête synchrone
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "index.html", true);
+      //send est bloquant tant que la réponse
+      xhr.send();
+      //s'exécute si le send est terminé
+      const response = xhr.response;
+      console.log(response);
+
+      //2 - cas de requête asynchrone
+      /*const xhr = new XMLHttpRequest()
+    xhr.open("GET", )*/
+
+      const xhr = new XMLHttpRequest();
+      console.log(xhr.readyState);
+      xhr.open("GET", "index1.html");
+      console.log(xhr.readyState);
+      xhr.onreadystatechange = function () {
+        console.log(xhr.readyState);
+        console.log(xhr.responseText);
+      };
+      xhr.send();
+    </script>
+  </body>
+</html>
