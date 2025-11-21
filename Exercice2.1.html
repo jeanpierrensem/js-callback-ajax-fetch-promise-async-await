@@ -12,7 +12,7 @@
       function recupererUtilisateurAPI(userId, callback) {
         const xhr = new XMLHttpRequest();
         console.log(xhr.readyState);
-        xhr.open("GET", "https://jsonplaceholder.typicode.com/users/" + userId);
+        xhr.open("GET", `https://jsonplaceholder.typicode.com/users/${userId}`);
         console.log(xhr.readyState);
         xhr.onreadystatechange = function () {
           console.log(xhr.readyState);
