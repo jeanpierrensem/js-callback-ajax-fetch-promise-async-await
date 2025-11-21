@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Exercice 5.1 : Chaînage de Promesses</h2>
+    <script type="text/javascript">
+      // Versions Promise des fonctions (déjà définies)
+      function recupererUtilisateurPromise(id) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              id: id,
+              nom: "Tazi",
+              prenom: "Omar",
+              profession: "Ingénieur",
+            });
+          }, 1000);
+        });
+      }
+
+      function recupererPostsPromise(userId) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve([
+              { id: 1, titre: "Les bases de MongoDB", userId },
+              { id: 2, titre: "Redis pour les débutants", userId },
+            ]);
+          }, 1000);
+        });
+      }
+
+      function recupererCommentairesPromise(postId) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve([
+              { id: 1, texte: "Super article!", auteur: "Youssef" },
+              { id: 2, texte: "Merci pour le partage", auteur: "Salma" },
+            ]);
+          }, 1000);
+        });
+      }
+
+      function demonstrationPromiseChain() {
+        console.log("Début avec les Promesses...");
+
+        // TODO: Chaînez les promesses avec .then()
+        recupererUtilisateurPromise(1)
+          .then((utilisateur) => {
+            return recupererPostsPromise(utilisateur.id);
+          })
+          .then((posts) => {
+            return recupererCommentairesPromise(posts[0].id);
+          })
+          .then((comments) => {
+            console.log("Commentaires récupérés:", comments.length);
+            comments.forEach((comment) => {
+              console.log("  -", comment.auteur + ":", comment.texte);
+            });
+          })
+          .catch((erreur) => {
+            console.log("une erreur s'est produite", erreur);
+          });
+      }
+      // Votre code ici
+      demonstrationPromiseChain();
+    </script>
+  </body>
+</html>
