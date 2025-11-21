@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h2>Exercice 3.1 : Cascade de callbacks</h2>
+    <script type="text/javascript">
+      // Fonctions déjà définies (ne pas modifier)
+      function recupererUtilisateur(id, callback) {
+        setTimeout(() => {
+          callback({
+            id: id,
+            nom: "El Idrissi",
+            prenom: "Amina",
+            ville: "Rabat",
+          });
+        }, 1000);
+      }
+
+      function recupererPosts(userId, callback) {
+        setTimeout(() => {
+          callback([
+            { id: 1, titre: "Introduction à Node.js", userId: userId },
+            { id: 2, titre: "Les Promises en JavaScript", userId: userId },
+          ]);
+        }, 1000);
+      }
+
+      function recupererCommentaires(postId, callback) {
+        setTimeout(() => {
+          callback([
+            { id: 1, texte: "Excellent article!", auteur: "Khadija" },
+            { id: 2, texte: "Très instructif", auteur: "Hassan" },
+          ]);
+        }, 1000);
+      }
+
+      function demonstrationCallbackHell() {
+        console.log("Début de la récupération des données...");
+
+        // TODO: Appelez les fonctions en cascade
+        // Attention à l'indentation qui va créer la "pyramide de l'enfer"
+        // Votre code ici
+
+        // Récupération de l'utilisateur
+        recupererUtilisateur(1, (userData) => {
+          console.log("Utilisateur récupéré :", userData.nom, userData.prenom);
+          // Récupération des posts de l'utilisateur
+          recupererPosts(userData.id, (posts) => {
+            console.log("Posts récupérés :", posts.length);
+            // Récupération des commentaires du premier post
+            recupererCommentaires(posts[0].id, (comments) => {
+              console.log("commentaires du post '" + posts[0].titre + "'':");
+              comments.forEach((comment) => {
+                console.log("  -", comment.auteur + ":", comment.texte);
+              });
+              console.log("\nToutes les données ont été récupérées!");
+            });
+          });
+        });
+      }
+      demonstrationCallbackHell()
+    </script>
+  </body>
+</html>
