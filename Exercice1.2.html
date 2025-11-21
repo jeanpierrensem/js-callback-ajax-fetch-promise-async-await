@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Exercice 1.2 : Gestion d'erreur avec les callbacks</h1>
+    <script type="text/javascript">
+      function recupererUtilisateurAvecErreur(id, callback) {
+        setTimeout(() => {
+          // TODO: Si id <= 0, appelez callback(new Error("ID invalide"))
+          if (id <= 0) callback(new Error(id + " invalide"));
+          else {
+            // Sinon, appelez callback(null, utilisateur)
+            const utilisateur = {
+              id: id,
+              nom: "Bennani",
+              prenom: "Mohammed",
+              email: "m.bennani@example.ma",
+            };
+            // Votre code ici
+            callback(null, utilisateur);
+          }
+        }, 1000);
+      }
+      //cas success
+      recupererUtilisateurAvecErreur(1, console.log);
+      //cas erreur
+      recupererUtilisateurAvecErreur(0, console.log);
+    </script>
+  </body>
+</html>
