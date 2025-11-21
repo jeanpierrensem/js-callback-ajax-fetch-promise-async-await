@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Exercice 8.1 : Gestion d'erreur robuste avec Fetch</h2>
+    <script type="text/javascript">
+      async function fetchAvecGestionErreur(url) {
+        try {
+          // TODO: Implémentez la logique complète
+          fetch(url)
+            // 1. Faire la requête avec fetch
+            .then((response) => {
+              // 3. Parser le JSON
+              console.log(response.json());
+            });
+          // Votre code ici
+        } catch (erreur) {
+          // TODO: Distinguer les types d'erreurs
+          if (!response.ok) {
+            throw new Error(`Erreur NOT OK : ${response.status}`);
+          } else if (response.status === 404) {
+            //Erreur 404
+            throw new Error(`Erreur HTTP 404: ${response.status}`);
+          } else {
+            // // Erreur réseau
+            throw new Error(`Erreur HTTP Reéseau: ${response.status}`);
+          }
+          throw erreur;
+        }
+      }
+      // Fonction de test
+      async function testerGestionErreurs() {
+        const urls = [
+          "https://jsonplaceholder.typicode.com/users/1", // OK
+          "https://jsonplaceholder.typicode.com/users/9999", // 404
+          "https://api-inexistante-xyz123.com/test", // Erreur réseau
+        ];
+        for (const url of urls) {
+          console.log(`\nTest avec : ${url}`);
+          try {
+            const donnees = await fetchAvecGestionErreur(url);
+            console.log(" Succès:", donnees);
+          } catch (erreur) {
+            console.error(" Erreur:", erreur.message);
+          }
+        }
+      }
+      testerGestionErreurs();
+    </script>
+  </body>
+</html>
