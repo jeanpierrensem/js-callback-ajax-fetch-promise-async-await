@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Exercice 7.1 : Introduction à async/await</h2>
+    <script type="text/javascript">
+      // Fonction utilitaire (déjà définie)
+      function obtenirDonnees(type, id) {
+        const donnees = {
+          utilisateur: {
+            id: 1,
+            nom: "Rachidi",
+            prenom: "Amal",
+            role: "Chef de projet",
+          },
+          projet: {
+            id: 1,
+            nom: "Migration Cloud",
+            status: "En cours",
+            progression: 75,
+          },
+          taches: [
+            { id: 1, titre: "Configuration serveurs", fait: true },
+            { id: 2, titre: "Migration base de données", fait: true },
+            { id: 3, titre: "Tests de performance", fait: false },
+            { id: 4, titre: "Documentation", fait: false },
+          ],
+        };
+
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (donnees[type]) {
+              resolve(donnees[type]);
+            } else {
+              reject(new Error("Type de données inconnu"));
+            }
+          }, 800);
+        });
+      }
+
+      // TODO: Créez la fonction async
+      async function afficherTableauDeBord() {
+        console.log("Chargement du tableau de bord...");
+
+        try {
+          // TODO: Utilisez await pour récupérer :
+          // 1. L'utilisateur
+          // Récupération séquentielle des données avec await
+          const utilisateur = await obtenirDonnees("utilisateur");
+          console.log(
+            `\n Utilisateur: ${utilisateur.prenom} ${utilisateur.nom}`
+          );
+          console.log(`   Rôle: ${utilisateur.role}`);
+          // 2. Le projet
+          const projet = await obtenirDonnees("projet");
+          console.log(`\n Projet: ${projet.nom}`);
+          console.log(`   Statut: ${projet.status}`);
+          console.log(`   Progression: ${projet.progression}%`);
+          // 3. Les tâches
+          const taches = await obtenirDonnees("taches");
+          console.log(`\n Tâches (${taches.length} au total):`);
+
+          const tachesTerminees = taches.filter((t) => t.fait).length;
+          const tachesRestantes = taches.length - tachesTerminees;
+
+          taches.forEach((tache) => {
+            const statut = tache.fait ? "✓" : "○";
+            console.log(`   ${statut} ${tache.titre}`);
+          });
+          // Puis affichez un résumé formaté
+          console.log(
+            `   - Tâches terminées: ${tachesTerminees}/${taches.length}`
+          );
+          console.log(`   - Tâches restantes: ${tachesRestantes}`);
+          console.log(`   - Progression globale: ${projet.progression}%`);
+          console.log("\n Tableau de bord chargé avec succès!");
+        } catch (erreur) {
+          console.error("Erreur lors du chargement:", erreur.message);
+        }
+      }
+      afficherTableauDeBord();
+    </script>
+  </body>
+</html>
