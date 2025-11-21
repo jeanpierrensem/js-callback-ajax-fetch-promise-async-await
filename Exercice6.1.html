@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <h2>Exercice 6.1 : Optimisation avec Promise.all</h2>
+  <script type="text/javascript">
+    function recupererProfil(userId) {
+      return new Promise((resolve) => {
+        const delai = Math.random() * 2000 + 500; // Entre 500ms et 2500ms
+        setTimeout(() => {
+          const noms = [
+            "Zahiri",
+            "Mansouri",
+            "Berrada",
+            "Alaoui",
+            "Benjelloun",
+          ];
+          const prenoms = ["Nadia", "Leila", "Karim", "Sofia", "Ahmed"];
+          resolve({
+            id: userId,
+            nom: noms[userId - 1],
+            prenom: prenoms[userId - 1],
+            delai: delai,
+          });
+        }, delai);
+      });
+    }
+
+    function demonstrationPromiseAll() {
+      // TODO: Implémentez deux versions :
+
+      // Version 1 : Séquentielle (mauvaise performance)
+      console.log("Version séquentielle :");
+      console.time("Durée séquentielle");
+      // Récupérez les profils 1, 2, 3 l'un après l'autre
+      recupererProfil(1)
+        .then((resolve) => console.log(resolve))
+        .catch((error) => console.log("une erreur s'est produite", error));
+      recupererProfil(2)
+        .then((resolve) => console.log(resolve))
+        .catch((error) => console.log("une erreur s'est produite", error));
+      recupererProfil(3)
+        .then((resolve) => console.log(resolve))
+        .catch((error) => console.log("une erreur s'est produite", error));
+
+      // Version 2 : Parallèle avec Promise.all (bonne performance)
+      console.log("\nVersion parallèle :");
+      console.time("Durée parallèle");
+      // Récupérez les profils 1, 2, 3 simultanément
+      const promise1 = recupererProfil(1);
+      const promise2 = recupererProfil(2);
+      const promise3 = recupererProfil(3);
+
+      Promise.all([promise1, promise2, promise3])
+        .then((results) => {
+          console.log("Tous les résultats : ", results);
+        })
+        .catch((error) => {
+          console.log("Au moins une promesse a échoué", error);
+        });
+    }
+    demonstrationPromiseAll();
+  </script>
+  <body></body>
+</html>
